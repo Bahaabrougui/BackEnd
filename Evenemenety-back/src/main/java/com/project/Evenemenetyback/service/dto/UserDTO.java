@@ -36,7 +36,7 @@ public class UserDTO {
     private String email;
 
 
-    @Size(min = 60, max = 60)
+    @Size(min = 0, max = 60)
     private String password;
 
 
