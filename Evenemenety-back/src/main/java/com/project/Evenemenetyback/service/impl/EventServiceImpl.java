@@ -2,12 +2,15 @@ package com.project.Evenemenetyback.service.impl;
 
 import com.project.Evenemenetyback.domain.Covoiturage;
 import com.project.Evenemenetyback.domain.Event;
+import com.project.Evenemenetyback.domain.User;
 import com.project.Evenemenetyback.repository.CovoiturageRepository;
 import com.project.Evenemenetyback.repository.EventRepository;
 
+import com.project.Evenemenetyback.repository.UserRepository;
 import com.project.Evenemenetyback.service.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +26,12 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
 
+    private final UserRepository userRepository;
 
-    public EventServiceImpl(EventRepository eventRepository) {
+
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -35,8 +41,14 @@ public class EventServiceImpl implements EventService {
      * @return the persisted entity
      */
     @Override
-    public Event save(Event event) {
+    public Event save(Event event, String username) {
         log.debug("Request to save event : {}", event);
+
+
+        User user = userRepository.findByUsername(username).get();
+
+        event.setUser(user);
+
         Event result = eventRepository.save(event);
         return result;
     }
@@ -77,6 +89,7 @@ public class EventServiceImpl implements EventService {
         log.debug("Request to delete Field : {}", id);
         eventRepository.deleteById(id);
     }
+
 
 
 }

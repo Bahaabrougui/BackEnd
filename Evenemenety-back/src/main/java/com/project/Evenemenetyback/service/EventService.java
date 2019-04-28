@@ -17,7 +17,7 @@ public interface EventService {
      * @param event the entity to save
      * @return the persisted entity
      */
-    Event save(Event event);
+    Event save(Event event, String username);
 
     /**
      * Get all the events.
@@ -49,5 +49,6 @@ public interface EventService {
      *
      * @return the list of entities
      */
+
 
 }

@@ -22,7 +22,6 @@ public class Event {
     private String music;
 
     @NotNull
-
     @Column(name = "place")
     private String place;
 
