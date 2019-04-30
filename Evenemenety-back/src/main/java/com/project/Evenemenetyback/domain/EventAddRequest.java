@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "eventRequest")
+@Table(name = "eventrequest")
 
 public class EventAddRequest {
 
@@ -26,16 +26,16 @@ public class EventAddRequest {
     private String place;
 
     @NotNull
+    @Column(name="date")
+    private String date;
+
+    @NotNull
     @Column(name = "starting_time")
     private String startingTime;
 
 
     @Column(name = "ending_time")
     private String endingTime;
-
-    @NotNull
-    @Column(name = "user_login")
-    private String userLogin;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -87,14 +87,6 @@ public class EventAddRequest {
 
     public void setEndingTime(String endingTime) {
         this.endingTime = endingTime;
-    }
-
-    public String getUserLogin() {
-        return userLogin;
-    }
-
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
     }
 
     public User getUser() {

@@ -17,7 +17,7 @@ public interface CovoiturageService {
      * @param covoiturage the entity to save
      * @return the persisted entity
      */
-    Covoiturage save(Covoiturage covoiturage);
+    Covoiturage save(Covoiturage covoiturage, String username, Long id);
 
     /**
      * Get all the Covoiturages.

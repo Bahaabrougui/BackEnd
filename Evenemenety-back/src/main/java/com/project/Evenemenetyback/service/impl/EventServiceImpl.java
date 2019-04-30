@@ -10,6 +10,7 @@ import com.project.Evenemenetyback.repository.UserRepository;
 import com.project.Evenemenetyback.service.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,20 @@ public class EventServiceImpl implements EventService {
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+    }
+
+    /**
+     * Get the "name" event.
+     *
+     * @param name the music of the entity
+     * @return the entity
+     */
+   public List<Event> findByName(String name){
+        log.debug("Request to get events by name : {}", name);
+
+        List<Event> events = eventRepository.findByName(name);
+
+        return events;
     }
 
     /**
@@ -90,6 +105,21 @@ public class EventServiceImpl implements EventService {
         eventRepository.deleteById(id);
     }
 
+    /**
+     * Get the "music" event.
+     *
+     * @param music the music of the entity
+     * @return the entity
+     */
+    public List<Event> findByMusic(String music){
+
+        log.debug("Request to get events by music : {}", music);
+
+        List<Event> events = eventRepository.findByMusic(music);
+
+        return events;
+
+    }
 
 
 }

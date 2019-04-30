@@ -40,11 +40,24 @@ public class EventResource {
     }
 
     @GetMapping("/events")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Timed
     public List<Event> getAllEvents(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all events");
         return eventService.findAll();
+    }
+
+    @GetMapping("/searchByMusic/{music}")
+    @Timed
+    public List<Event> getAllEventsByMusic(@PathVariable String music){
+        log.debug("REST request to get all events by music");
+        return eventService.findByMusic(music);
+            }
+
+    @GetMapping("/searchByName/{name}")
+    @Timed
+    public List<Event> getAllEventsByName(@PathVariable String name){
+        log.debug("REST request to get all events by name");
+        return eventService.findByName(name);
     }
 
     @DeleteMapping("/deleteEvent/{id}")
@@ -58,9 +71,22 @@ public class EventResource {
 
     }
 
+    @GetMapping("/eventsCreated")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @Timed
+    public List<Event> getUserEvents() {
+        log.debug("REST request to get user's events");
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization").split(" ")[1];
+        String username = jwtProvider.getUserNameFromJwtToken(token);
+
+        return eventRepository.findUserEvents(username);
+
+    }
+
 
     @GetMapping("/event/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Timed
     public ResponseEntity<?> getEventDetails(@PathVariable Long id){
 
@@ -78,7 +104,7 @@ public class EventResource {
     @PostMapping("/events")
     @Timed
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<User> createEvent(@Valid @RequestBody Event event)  {
+    public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event)  {
 
         log.debug("REST request to save event : {}", event);
 

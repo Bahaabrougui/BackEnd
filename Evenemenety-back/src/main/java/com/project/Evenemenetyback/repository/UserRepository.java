@@ -27,11 +27,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
 
-    @Query("select e from Event e inner join e.user")
-     List<Event> FindUserEvents();
 
-   @Query("select c from Covoiturage c inner join c.user")
-   List<Covoiturage> FindUserCovoiturage();
+
+
 
 
 }

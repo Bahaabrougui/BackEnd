@@ -1,6 +1,7 @@
 package com.project.Evenemenetyback.service;
 
 import com.project.Evenemenetyback.domain.Event;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,21 @@ public interface EventService {
      */
     List<Event> findAll();
 
+    /**
+     * Get the "music" event.
+     *
+     * @param music the music of the entity
+     * @return the entity
+     */
+    List<Event> findByMusic(String music);
+
+    /**
+     * Get the "name" event.
+     *
+     * @param name the music of the entity
+     * @return the entity
+     */
+    List<Event> findByName(String name);
 
     /**
      * Get the "id" event.
@@ -49,6 +65,7 @@ public interface EventService {
      *
      * @return the list of entities
      */
+
 
 
 }

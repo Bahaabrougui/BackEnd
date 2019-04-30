@@ -1,7 +1,9 @@
 package com.project.Evenemenetyback.service.impl;
 
 import com.project.Evenemenetyback.domain.EventAddRequest;
+import com.project.Evenemenetyback.domain.User;
 import com.project.Evenemenetyback.repository.EventAddRequestRepository;
+import com.project.Evenemenetyback.repository.UserRepository;
 import com.project.Evenemenetyback.service.EventAddRequestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,12 @@ public class EventAddRequestServiceImpl implements EventAddRequestService {
 
     private final EventAddRequestRepository eventAddRequestRepository;
 
+    private final UserRepository userRepository;
 
-    public EventAddRequestServiceImpl(EventAddRequestRepository eventAddRequestRepository){
+
+    public EventAddRequestServiceImpl(EventAddRequestRepository eventAddRequestRepository, UserRepository userRepository){
         this.eventAddRequestRepository=eventAddRequestRepository;
+        this.userRepository=userRepository;
     }
 
     /**
@@ -31,10 +36,24 @@ public class EventAddRequestServiceImpl implements EventAddRequestService {
      * @return the persisted entity
      */
     @Override
-    public EventAddRequest save(EventAddRequest request) {
+    public EventAddRequest save(EventAddRequest request, String username) {
         log.debug("Request to save event : {}", request);
+
+        User user = userRepository.findByUsername(username).get();
+
+        request.setUser(user);
         EventAddRequest result = eventAddRequestRepository.save(request);
         return result;
+    }
+
+    public List<EventAddRequest> findByMusic(String music){
+
+        log.debug("Request to get requests by music : {}", music);
+
+        List<EventAddRequest> events = eventAddRequestRepository.findByMusic(music);
+
+        return events;
+
     }
 
     /**

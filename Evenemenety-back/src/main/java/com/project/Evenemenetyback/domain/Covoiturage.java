@@ -13,10 +13,14 @@ public class Covoiturage {
     private Long id;
 
     @NotNull
-    @Column(name = "cars_name")
-    private String CarsName;
+    @Column(name = "nombre_de_places")
+    private String nombrePlaces;
 
-        @Column(name = "price")
+    @NotNull
+    @Column(name = "cars_name")
+    private String carsName;
+
+    @Column(name = "price")
     private String price;
 
     @NotNull
@@ -41,11 +45,11 @@ public class Covoiturage {
     }
 
     public String getCarsName() {
-        return CarsName;
+        return carsName;
     }
 
     public void setCarsName(String carsName) {
-        CarsName = carsName;
+        carsName = carsName;
     }
 
     public String getPrice() {
@@ -78,5 +82,13 @@ public class Covoiturage {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNombrePlaces() {
+        return nombrePlaces;
+    }
+
+    public void setNombrePlaces(String nombrePlaces) {
+        this.nombrePlaces = nombrePlaces;
     }
 }

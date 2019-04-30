@@ -13,8 +13,15 @@ public interface EventAddRequestService {
      * @param eventrequest the entity to save
      * @return the persisted entity
      */
-    EventAddRequest save(EventAddRequest eventrequest);
+    EventAddRequest save(EventAddRequest eventrequest, String username);
 
+    /**
+     * Get the "music" request.
+     *
+     * @param music the music of the entity
+     * @return the entity
+     */
+    List<EventAddRequest> findByMusic(String music);
 
     /**
      * Get all the eventrequests.

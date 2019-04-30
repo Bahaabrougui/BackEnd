@@ -18,6 +18,14 @@ public class Event {
     private String name;
 
     @NotNull
+    @Column(name = "description")
+    private String description;
+
+    @NotNull
+    @Column(name="date")
+    private String date;
+
+    @NotNull
     @Column(name = "music")
     private String music;
 
@@ -37,8 +45,8 @@ public class Event {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "event")
-    private List<Covoiturage> covoiturage;
+   /* @OneToMany(mappedBy = "event")
+    private List<Covoiturage> covoiturage; */
 
 
     public Long getId() {
@@ -96,12 +104,28 @@ public class Event {
     public void setUser(User user) {
         this.user = user;
     }
-
+ /*
     public List<Covoiturage> getCovoiturage() {
         return covoiturage;
     }
 
     public void setCovoiturage(List<Covoiturage> covoiturage) {
         this.covoiturage = covoiturage;
+    } */
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

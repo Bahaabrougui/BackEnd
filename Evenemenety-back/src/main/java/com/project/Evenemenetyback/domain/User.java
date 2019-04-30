@@ -54,14 +54,14 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Event> event;
+   /* @OneToMany(mappedBy = "user")
+    private List<Event> event; */
 
-    @OneToMany(mappedBy = "user")
-    private List<Covoiturage> covoiturage;
+   /* @OneToMany(mappedBy = "user")
+    private List<Covoiturage> covoiturage; */
 
-    @OneToMany(mappedBy = "user")
-    private List<EventAddRequest> requests;
+   /* @OneToMany(mappedBy = "user")
+    private List<EventAddRequest> requests; */
 
     public Long getId() {
         return id;
@@ -153,7 +153,7 @@ public class User implements Serializable {
     }
 
 
-    public List<Event> getEvent() {
+   /* public List<Event> getEvent() {
         return event;
     }
 
@@ -175,5 +175,5 @@ public class User implements Serializable {
 
     public void setRequests(List<EventAddRequest> requests) {
         this.requests = requests;
-    }
+    } */
 }

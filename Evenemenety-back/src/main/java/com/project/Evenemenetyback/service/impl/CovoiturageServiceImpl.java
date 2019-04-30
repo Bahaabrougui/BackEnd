@@ -1,7 +1,11 @@
 package com.project.Evenemenetyback.service.impl;
 
 import com.project.Evenemenetyback.domain.Covoiturage;
+import com.project.Evenemenetyback.domain.Event;
+import com.project.Evenemenetyback.domain.User;
 import com.project.Evenemenetyback.repository.CovoiturageRepository;
+import com.project.Evenemenetyback.repository.EventRepository;
+import com.project.Evenemenetyback.repository.UserRepository;
 import com.project.Evenemenetyback.service.CovoiturageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +23,14 @@ public class CovoiturageServiceImpl implements CovoiturageService {
 
     private final CovoiturageRepository covoiturageRepository;
 
+    private final UserRepository userRepository;
 
-    public CovoiturageServiceImpl(CovoiturageRepository covoiturageRepository){
+    private final EventRepository eventRepository;
+
+    public CovoiturageServiceImpl(CovoiturageRepository covoiturageRepository, UserRepository userRepository, EventRepository eventRepository){
     this.covoiturageRepository= covoiturageRepository;
+    this.userRepository = userRepository;
+    this.eventRepository= eventRepository;
     }
 
     /**
@@ -31,8 +40,15 @@ public class CovoiturageServiceImpl implements CovoiturageService {
      * @return the persisted entity
      */
     @Override
-    public Covoiturage save(Covoiturage covoiturage) {
+    public Covoiturage save(Covoiturage covoiturage, String username, Long id) {
         log.debug("Request to save covoiturage : {}", covoiturage);
+
+        User user = userRepository.findByUsername(username).get();
+        covoiturage.setUser(user);
+
+        Event event = eventRepository.getOne(id);
+        covoiturage.setEvent(event);
+
         Covoiturage result = covoiturageRepository.save(covoiturage);
         return result;
     }
