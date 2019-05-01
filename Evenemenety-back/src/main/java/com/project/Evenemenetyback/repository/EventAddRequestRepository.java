@@ -19,4 +19,7 @@ public interface EventAddRequestRepository extends JpaRepository<EventAddRequest
 
     @Query("select e from EventAddRequest e where e.music=:music")
     List<EventAddRequest> findByMusic(@Param("music") String music);
+
+    @Query("select e from EventAddRequest e where e.name=:name")
+    List<EventAddRequest> findByName(@Param("name") String name);
 }

@@ -1,10 +1,12 @@
 package com.project.Evenemenetyback.service.impl;
 
+import com.project.Evenemenetyback.domain.Event;
 import com.project.Evenemenetyback.domain.EventAddRequest;
 import com.project.Evenemenetyback.domain.User;
 import com.project.Evenemenetyback.repository.EventAddRequestRepository;
 import com.project.Evenemenetyback.repository.UserRepository;
 import com.project.Evenemenetyback.service.EventAddRequestService;
+import org.apache.http.annotation.Obsolete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,11 +52,45 @@ public class EventAddRequestServiceImpl implements EventAddRequestService {
 
         log.debug("Request to get requests by music : {}", music);
 
-        List<EventAddRequest> events = eventAddRequestRepository.findByMusic(music);
+        List<EventAddRequest> requests = eventAddRequestRepository.findByMusic(music);
 
-        return events;
+        return requests;
 
     }
+
+    public List<EventAddRequest> findByName(String music){
+
+        log.debug("Request to get requests by name : {}", music);
+
+        List<EventAddRequest> requests = eventAddRequestRepository.findByName(music);
+
+        return requests;
+
+    }
+
+    /**
+     * Transform the request into an event.
+     *
+     * @param request the body of the entity
+     * @return the entity
+     */
+
+    @Override
+    public Event merge(EventAddRequest request){
+
+        Event event = new Event();
+        event.setEndingTime(request.getEndingTime());
+        event.setStartingTime(request.getStartingTime());
+        event.setPlace(request.getPlace());
+        event.setMusic(request.getMusic());
+        event.setDescription(request.getDescription());
+        event.setDate(request.getDate());
+        event.setName(request.getName());
+
+        return event;
+
+    }
+
 
     /**
      * Get all the requests.

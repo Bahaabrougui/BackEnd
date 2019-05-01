@@ -25,6 +25,9 @@ public class Event {
     @Column(name="date")
     private String date;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @NotNull
     @Column(name = "music")
     private String music;
@@ -127,5 +130,13 @@ public class Event {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

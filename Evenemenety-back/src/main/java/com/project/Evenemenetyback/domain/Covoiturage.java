@@ -18,7 +18,7 @@ public class Covoiturage {
 
     @NotNull
     @Column(name = "cars_name")
-    private String carsName;
+    private String car;
 
     @Column(name = "price")
     private String price;
@@ -44,13 +44,7 @@ public class Covoiturage {
         this.id = id;
     }
 
-    public String getCarsName() {
-        return carsName;
-    }
 
-    public void setCarsName(String carsName) {
-        carsName = carsName;
-    }
 
     public String getPrice() {
         return price;
@@ -90,5 +84,13 @@ public class Covoiturage {
 
     public void setNombrePlaces(String nombrePlaces) {
         this.nombrePlaces = nombrePlaces;
+    }
+
+    public String getCar() {
+        return car;
+    }
+
+    public void setCar(String car) {
+        this.car = car;
     }
 }

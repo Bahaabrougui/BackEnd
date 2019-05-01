@@ -24,6 +24,11 @@ public interface EventRepository  extends JpaRepository<Event, Long> {
     List<Event> findByMusic(@Param("music") String music);
 
 
+    @Query("select e from Event e inner join e.user u where u.username=:username and e.music=:music")
+    List<Event> findUserEventsByMusic(String username, String music);
+
+    @Query("select e from Event e inner join e.user u where u.username=:username and e.name=:name")
+    List<Event> findUserEventsByName(String username, String name);
 
     @Query("select e from Event e inner join e.user u where u.username=:username")
     List<Event> findUserEvents(String username);

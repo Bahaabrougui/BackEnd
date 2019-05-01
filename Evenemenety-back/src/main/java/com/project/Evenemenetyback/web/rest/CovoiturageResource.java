@@ -61,7 +61,7 @@ public class CovoiturageResource {
 
     }
 
-    @GetMapping("/CovoiturageCreated")
+    @GetMapping("/covoiturageCreated")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Timed
     public List<Covoiturage> getUserCovoiturages() {
@@ -100,7 +100,7 @@ public class CovoiturageResource {
 
     }
 
-    @PostMapping("/Covoiturages")
+    @PostMapping("/covoiturages")
     @Timed
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Covoiturage> createCovoiturage(@Valid @RequestBody Covoiturage covoiturage)  {
@@ -111,7 +111,10 @@ public class CovoiturageResource {
         String token = request.getHeader("Authorization").split(" ")[1];
         String username = jwtProvider.getUserNameFromJwtToken(token);
 
-        String idString = request.getParameter("eventid");
+
+
+        String idString = request.getHeader("eventid");
+        log.debug("testing id"+idString);
         Long id = Long.parseLong(idString);
 
         Covoiturage newCovoiturage = covoiturageService.save(covoiturage,username,id);

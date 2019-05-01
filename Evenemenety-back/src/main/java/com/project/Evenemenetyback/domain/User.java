@@ -38,11 +38,13 @@ public class User implements Serializable {
     @Size(min = 3, max = 50)
     private String username;
 
-    @NaturalId
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @NotBlank
     @Size(min = 6, max = 100)
@@ -150,6 +152,14 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 

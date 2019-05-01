@@ -85,6 +85,34 @@ public class EventResource {
 
     }
 
+    @GetMapping("/eventsCreatedByMusic/{music}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @Timed
+    public List<Event> getUserEventsByMusic(@PathVariable("music") String music) {
+        log.debug("REST request to get user's events by music");
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization").split(" ")[1];
+        String username = jwtProvider.getUserNameFromJwtToken(token);
+
+        return eventRepository.findUserEventsByMusic(username,music);
+
+    }
+
+    @GetMapping("/eventsCreatedByName/{name}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @Timed
+    public List<Event> getUserEventsByName(@PathVariable("name") String name) {
+        log.debug("REST request to get user's events by name");
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization").split(" ")[1];
+        String username = jwtProvider.getUserNameFromJwtToken(token);
+
+        return eventRepository.findUserEventsByName(username,name);
+
+    }
+
 
     @GetMapping("/event/{id}")
     @Timed

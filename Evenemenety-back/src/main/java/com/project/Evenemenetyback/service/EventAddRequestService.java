@@ -1,5 +1,6 @@
 package com.project.Evenemenetyback.service;
 
+import com.project.Evenemenetyback.domain.Event;
 import com.project.Evenemenetyback.domain.EventAddRequest;
 
 import java.util.List;
@@ -30,6 +31,13 @@ public interface EventAddRequestService {
      */
     List<EventAddRequest> findAll();
 
+    /**
+     * Get the "name" event.
+     *
+     * @param name the music of the entity
+     * @return the entity
+     */
+    List<EventAddRequest> findByName(String name);
 
     /**
      * Get the "id" eventrequest.
@@ -47,10 +55,13 @@ public interface EventAddRequestService {
     void delete(Long id);
 
     /**
-     * Search for the eventrequest corresponding to the query.
+     * Transform the request into an event.
      *
-     * @param query the query of the search
-     *
-     * @return the list of entities
+     * @param request the body of the entity
+     * @return the entity
      */
+
+    Event merge(EventAddRequest request);
+
+
 }

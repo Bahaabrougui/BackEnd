@@ -36,10 +36,13 @@ public class RequestResource {
 
     private final EventAddRequestRepository eventAddRequestRepository;
 
+    private final EventService eventService;
+
     private final JwtProvider jwtProvider;
 
-    public RequestResource(EventAddRequestService eventAddRequestService, JwtProvider jwtProvider, EventAddRequestRepository eventAddRequestRepository) {
+    public RequestResource(EventService eventService, EventAddRequestService eventAddRequestService, JwtProvider jwtProvider, EventAddRequestRepository eventAddRequestRepository) {
 
+        this.eventService=eventService;
         this.eventAddRequestService=eventAddRequestService;
         this.jwtProvider = jwtProvider;
         this.eventAddRequestRepository=eventAddRequestRepository;
@@ -72,6 +75,21 @@ public class RequestResource {
 
     }
 
+    @GetMapping("/searchRequestByMusic/{music}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Timed
+    public List<EventAddRequest> getAllRequestsyMusic(@PathVariable String music){
+        log.debug("REST request to get all requests by music");
+        return eventAddRequestService.findByMusic(music);
+    }
+
+    @GetMapping("/searchRequestByName/{name}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Timed
+    public List<EventAddRequest> getAllRequestsByName(@PathVariable String name){
+        log.debug("REST request to get all requests by name");
+        return eventAddRequestService.findByName(name);
+    }
 
 
     @GetMapping("/request/{id}")
@@ -87,6 +105,25 @@ public class RequestResource {
         EventAddRequest request = eventAddRequestRepository.findOneById(id).get();
 
         return ResponseEntity.ok().headers(HeaderUtil.createAlert("Listing request's details", request.getName())).body(request);
+
+    }
+
+    @GetMapping("/requestMerge/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Timed
+    public ResponseEntity<?> mergeRequest(@PathVariable Long id){
+
+        if(!eventAddRequestRepository.existsById(id)){
+            return new ResponseEntity<>(new ResponseMessage("Fail -> request not found"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        EventAddRequest request = eventAddRequestRepository.findOneById(id).get();
+        Event event =eventAddRequestService.merge(request);
+        Event newEvent = eventService.save(event, request.getUser().getUsername());
+        eventAddRequestService.delete(id);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("Merging a request into an event", newEvent.getName())).body(newEvent);
 
     }
 

@@ -21,13 +21,15 @@ public class EventAddRequest {
     private String music;
 
     @NotNull
-
     @Column(name = "place")
     private String place;
 
-    @NotNull
     @Column(name="date")
     private String date;
+
+    @NotNull
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "starting_time")
@@ -36,6 +38,9 @@ public class EventAddRequest {
 
     @Column(name = "ending_time")
     private String endingTime;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -95,5 +100,29 @@ public class EventAddRequest {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
